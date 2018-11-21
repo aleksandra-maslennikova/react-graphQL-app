@@ -43,21 +43,23 @@ class CreateItem extends Component {
         this.setState({ [name]: val })
     };
 
-   uploadFile = async (e) => {
+    uploadFile = async (e) => {
         const { files } = e.target;
-        const data = new FormData();
-        data.append('file', files[0]);
-        data.append('upload_preset', 'sickfits');
-        const res = await fetch('https://api.cloudinary.com/v1_1/lanamouse/image/upload', {
-            method: 'POST',
-            body: data
-        });
+        if (files && files.length) {
+            const data = new FormData();
+            data.append('file', files[0]);
+            data.append('upload_preset', 'sickfits');
+            const res = await fetch('https://api.cloudinary.com/v1_1/lanamouse/image/upload', {
+                method: 'POST',
+                body: data
+            });
 
-        const file = await res.json();
-        this.setState({
-            image: file.secure_url,
-            largeImage: file.eager[0].secure_url
-        });
+            const file = await res.json();
+            this.setState({
+                image: file.secure_url,
+                largeImage: file.eager[0].secure_url
+            });
+        }
     };
 
 
@@ -118,7 +120,7 @@ class CreateItem extends Component {
                         </label>
 
                         <label htmlFor="file">
-                            Price
+                            Image
                         <input
                                 type="file"
                                 id="file"

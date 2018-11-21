@@ -4,6 +4,8 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 import Item from './Item';
+import Pagination from './Pagination';
+
 
 const Center = styled.div`
     text-align: center;
@@ -28,10 +30,11 @@ const ALL_ITEMS_QUERY = gql`
     }
 `
 
-export default class Items extends Component {
+class Items extends Component {
     render() {
         return (
             <Center>
+                <Pagination />
                 <Query query={ALL_ITEMS_QUERY}>
                     {({ data, error, loading }) => {
                         if (loading) return <div>Loading...</div>
@@ -39,7 +42,13 @@ export default class Items extends Component {
                         return <ItemsList>{data.items.map(item => <Item item={item} key={item.id} />)}</ItemsList>
                     }}
                 </Query>
+                <Pagination />
             </Center>
         )
     }
 }
+
+
+export default Items;
+
+export { ALL_ITEMS_QUERY };
