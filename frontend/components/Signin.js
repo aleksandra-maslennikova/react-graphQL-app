@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import Form from './styles/Form';
 import Error from './ErrorMessage';
+import { CURRENT_USER_QUERY } from './User';
 
 const SIGN_IN_MUTATION = gql`
     mutation SIGN_IN_MUTATION($email: String!, $password: String!){
@@ -36,11 +37,12 @@ class Signin extends Component {
             <Mutation
                 mutation={SIGN_IN_MUTATION}
                 variables={this.state}
+                refetchQueries={[{ query: CURRENT_USER_QUERY }]}
             >
                 {(signin, { error, loading }) => (
                     <Form
                         method="post"
-                        onSubmit={e => this.handleSubmit(e, signup)}
+                        onSubmit={e => this.handleSubmit(e, signin)}
                     >
                         <h2>Sign into your account</h2>
                         <Error error={error} />
