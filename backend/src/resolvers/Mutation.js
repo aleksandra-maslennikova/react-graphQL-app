@@ -85,7 +85,7 @@ const Mutations = {
         const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
 
         const res = await ctx.db.mutation.updateUser({
-            where: email,
+            where: { email },
             data: { resetToken, resetTokenExpiry }
         });
 
@@ -113,16 +113,16 @@ const Mutations = {
             throw new Error("Token is not valid or expired");
         }
         // 4. hash user's new password
-        const newPassword = await bycript.hash(args.password, 10);
+        const newPassword = await bycript.hash(password, 10);
         // 5. save the new password to the user and remove old resetToken fields
         const updatedUser = await ctx.db.mutation.updateUser({
             where: {
-                email: user.email,
-                data: {
-                    password: newPassword,
-                    resetToken: null,
-                    resetTokenExpiry: null
-                }
+                email: user.email
+            },
+            data: {
+                password: newPassword,
+                resetToken: null,
+                resetTokenExpiry: null
             }
         }, info);
 

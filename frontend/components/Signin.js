@@ -49,11 +49,11 @@ class Signin extends Component {
                         <fieldset disabled={loading} aria-busy={loading}>
                             <label htmlFor="email">
                                 Email
-                                <input type="email" name="email" id="email" value={this.state.value} onChange={this.handleChange} />
+                                <input type="email" name="email" id="email" value={this.state.email} onChange={this.handleChange} />
                             </label>
                             <label htmlFor="password">
                                 Password
-                                <input type="password" name="password" id="password" value={this.state.value} onChange={this.handleChange} />
+                                <input type="password" name="password" id="password" value={this.state.password} onChange={this.handleChange} />
                             </label>
                             <button type="submit">Sign In</button>
                         </fieldset>
