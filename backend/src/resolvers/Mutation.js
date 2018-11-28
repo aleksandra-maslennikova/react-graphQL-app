@@ -2,6 +2,7 @@ const bycript = require('bcryptjs');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util'); // function that takes callback based functions and turns them into promise 
 const { setUserToken } = require('../utils');
+const { transport, makeANiceEmail } = require('../mail');
 
 const Mutations = {
     async createItem(parent, args, ctx, info) {
@@ -89,9 +90,20 @@ const Mutations = {
             data: { resetToken, resetTokenExpiry }
         });
 
+        // 3. Email user with that token
+
+        const mailRes = await transport.sendMail({
+            from: 'test@test.com',
+            to: user.email,
+            subject: 'Your password reset token',
+            html: makeANiceEmail(`Your Password Reset Token is here! \n\n <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">
+            Click here to reset
+            </a>`)
+        })
+
         return { message: 'Thanks' };
 
-        // 3. Email user with that token
+    
 
     },
 

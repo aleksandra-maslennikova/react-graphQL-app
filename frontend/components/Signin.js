@@ -28,8 +28,8 @@ class Signin extends Component {
 
     handleSubmit = async (e, signin) => {
         e.preventDefault();
-        const res = await signin();
-        if (res.data.id) this.setState({ email: '', password: '' });
+        await signin();
+        this.setState({ email: '', password: '' });
     }
 
     render() {

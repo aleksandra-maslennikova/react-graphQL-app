@@ -9,9 +9,10 @@ import { CURRENT_USER_QUERY } from './User';
 
 
 const RESET_PASSWORD_MUTATION = gql`
-    mutation RESET_PASSWORD_MUTATION(resetToken: String!, password: String!, confirmPassword: String!){
-        resetPassword(email:$email, password: $password, confirmPassword: $confirmPassword){
-            message
+    mutation RESET_PASSWORD_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!){
+        resetPassword(resetToken:$resetToken, password: $password, confirmPassword: $confirmPassword){
+            id,
+            email
         }
     }
 `;
@@ -60,7 +61,7 @@ class ResetPassword extends Component {
                             </label>
                             <label htmlFor="confirmPassword">
                                 Confirm new password
-                                <input type="confirmPassword" name="confirmPassword" id="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange} />
+                                <input type="password" name="confirmPassword" id="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange} />
                             </label>
                             <button type="submit">Reset password</button>
                         </fieldset>
